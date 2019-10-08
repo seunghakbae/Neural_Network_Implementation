@@ -84,13 +84,17 @@ class TwoLayerNet(object):
     loss = None
     e = torch.exp(scores)
     softmax = e / torch.sum(e, dim=1, keepdim=True)
+
+    print(softmax)
+    print(y)
     #############################################################################
     #       TODO: Output을 이용하여 loss값 계산하고, 'loss'에 저장(scalar)        #
     #                loss function : negative log likelihood                    #
     #              'softmax' 변수에 저장된 softmax값을 이용해서 계산              #
     #         'y'는 정답 index를 가리키며 정답 확률에 -log 적용하여 평균           #
     #############################################################################
-    losss = softmax -
+    # loss = softmax -
+    pass
     #############################################################################
     #                              END OF YOUR CODE                             #
     #############################################################################
