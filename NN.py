@@ -69,9 +69,12 @@ class TwoLayerNet(object):
     # TODO: Forward path를 수행하고, 'scores'에 결과값을 저장 (shape : (N, C))  #
     #         input - linear layer - ReLU - linear layer - output             #
     #############################################################################
-    layer1 = X * W1 + b1
+    layer1 = torch.mm(X,W1) + b1
+    #print(layer1.shape)
     hidden = F.relu(layer1)
-    scores = hidden * W2 + b2
+    #print(hidden.shape)
+    scores = torch.mm(hidden,W2) + b2
+    #print(scores.shape)
     #############################################################################
     #                              END OF YOUR CODE                             #
     #############################################################################
@@ -85,16 +88,26 @@ class TwoLayerNet(object):
     e = torch.exp(scores)
     softmax = e / torch.sum(e, dim=1, keepdim=True)
 
-    print(softmax)
-    print(y)
+    # print('hi')
+    # print(y)
+    # print(softmax)
+    # print(softmax[0][y[0]])
+    # print(softmax[1][y[1]])
+    # print(-torch.log(softmax[1][y[1]]))
+    # print(-torch.log(0.))
+    # print('hi')
+
     #############################################################################
     #       TODO: Output을 이용하여 loss값 계산하고, 'loss'에 저장(scalar)        #
     #                loss function : negative log likelihood                    #
     #              'softmax' 변수에 저장된 softmax값을 이용해서 계산              #
     #         'y'는 정답 index를 가리키며 정답 확률에 -log 적용하여 평균           #
     #############################################################################
-    # loss = softmax -
-    pass
+    loss = 0
+
+    for i in range(len(y)):
+      loss += -torch.log(softmax[i][y[i]])
+
     #############################################################################
     #                              END OF YOUR CODE                             #
     #############################################################################
