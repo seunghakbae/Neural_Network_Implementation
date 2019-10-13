@@ -70,7 +70,12 @@ class TwoLayerNet(object):
     #         input - linear layer - ReLU - linear layer - output             #
     #############################################################################
     layer1 = torch.mm(X,W1) + b1
-    # print(layer1.shape)
+    # print('before add b1')
+    # print(torch.mm(X,W1))
+    # print(b1)
+    # print('b1')
+    # print('after add b1')
+    # print(layer1)
     hidden = F.relu(layer1)
     # print(hidden.shape)
     scores = torch.mm(hidden,W2) + b2
@@ -125,7 +130,7 @@ class TwoLayerNet(object):
     for i in range(len(y)):
       ds1[i][y[i]] -= 1
 
-    grads['b2'] = ds1
+    grads['b2'] = torch.sum(ds1, 0)
     grads['W2'] = torch.mm(hidden.t(), ds1)
 
     layer1_copy = layer1.clone()
@@ -138,8 +143,19 @@ class TwoLayerNet(object):
 
     dhidden = torch.mm(ds1, self.params['W2'].t()) * layer1_copy
 
-    grads['b1'] =dhidden
+    grads['b1'] =torch.sum(dhidden,0)
     grads['W1'] = torch.mm(X.t(), dhidden)
+
+    # print('b1 shape')
+    # print(self.params['b1'].shape)
+    # print('grad b1 shape')
+    # print(grads['b1'].shape)
+    #
+    # print('b2 shape')
+    # print(self.params['b2'].shape)
+    # print('grad b2 shape')
+    # print(grads['b2'].shape)
+
     #############################################################################
     #                              END OF YOUR CODE                             #
     #############################################################################
@@ -177,7 +193,10 @@ class TwoLayerNet(object):
       #########################################################################
       # TODO: 'grads' dictionary에서 gradient를 불러와 SGD update 수행        #
       #########################################################################
-      pass
+      self.params['W1'] -= learning_rate * grads['W1']
+      self.params['b1'] -= learning_rate * grads['b1']
+      self.params['W2'] -= learning_rate * grads['W2']
+      self.params['b2'] -= learning_rate * grads['b2']
       #########################################################################
       #                             END OF YOUR CODE                          #
       #########################################################################
