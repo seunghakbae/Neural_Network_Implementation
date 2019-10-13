@@ -112,7 +112,9 @@ class TwoLayerNet(object):
     loss = 0
 
     for i in range(len(y)):
-      loss += -torch.log(softmax[i][y[i]])
+      # print('softmax ' + str(i+1))
+      # print(torch.log(softmax[i][y[i]]))
+      loss += -torch.log(softmax[i][y[i]]) / 5
 
     #############################################################################
     #                              END OF YOUR CODE                             #
