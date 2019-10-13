@@ -70,11 +70,11 @@ class TwoLayerNet(object):
     #         input - linear layer - ReLU - linear layer - output             #
     #############################################################################
     layer1 = torch.mm(X,W1) + b1
-    #print(layer1.shape)
+    # print(layer1.shape)
     hidden = F.relu(layer1)
-    #print(hidden.shape)
+    # print(hidden.shape)
     scores = torch.mm(hidden,W2) + b2
-    #print(scores.shape)
+    # print(scores.shape)
     #############################################################################
     #                              END OF YOUR CODE                             #
     #############################################################################
@@ -90,14 +90,15 @@ class TwoLayerNet(object):
 
     # print('hi')
     # print(y)
-    # print(softmax)
+    #print(softmax)
     # print(softmax[0][y[0]])
     # print(softmax[1][y[1]])
     # print(-torch.log(softmax[1][y[1]]))
     # print(-torch.log(0.))
     # print('hi')
 
-    #############################################################################
+    ######################
+    # #######################################################
     #       TODO: Output을 이용하여 loss값 계산하고, 'loss'에 저장(scalar)        #
     #                loss function : negative log likelihood                    #
     #              'softmax' 변수에 저장된 softmax값을 이용해서 계산              #
@@ -120,7 +121,25 @@ class TwoLayerNet(object):
     #          grads['W1']는 self.params['W1']과 같은 shape를 가져야 함.        #
     #              softmax의 gradient부터 차근차근 구해나가도록 함.              #
     #############################################################################
-    pass
+    ds1 = softmax.clone()
+    for i in range(len(y)):
+      ds1[i][y[i]] -= 1
+
+    grads['b2'] = ds1
+    grads['W2'] = torch.mm(hidden.t(), ds1)
+
+    layer1_copy = layer1.clone()
+    for i in range(len(layer1_copy)):
+        for j in range(len(layer1_copy[i])):
+            if layer1_copy[i][j] > 0:
+                layer1_copy[i][j] = 1
+            else:
+                layer1_copy[i][j] = 0
+
+    dhidden = torch.mm(ds1, self.params['W2'].t()) * layer1_copy
+
+    grads['b1'] =dhidden
+    grads['W1'] = torch.mm(X.t(), dhidden)
     #############################################################################
     #                              END OF YOUR CODE                             #
     #############################################################################
