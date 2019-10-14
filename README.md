@@ -1,1 +1,2 @@
-# Neural_Network_homework
+# Neural Network from scratch
+
