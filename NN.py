@@ -39,8 +39,6 @@ class TwoLayerNet(object):
     self.params['W2'] = std * torch.randn(hidden_size, output_size)
     self.params['b2'] = torch.zeros(output_size)
 
-
-
   def loss(self, X, y=None):
     """
     Neural network의 loss와 gradient를 계산합니다.
@@ -70,16 +68,8 @@ class TwoLayerNet(object):
     #         input - linear layer - ReLU - linear layer - output             #
     #############################################################################
     layer1 = torch.mm(X,W1) + b1
-    # print('before add b1')
-    # print(torch.mm(X,W1))
-    # print(b1)
-    # print('b1')
-    # print('after add b1')
-    # print(layer1)
     hidden = F.relu(layer1)
-    # print(hidden.shape)
     scores = torch.mm(hidden,W2) + b2
-    # print(scores.shape)
     #############################################################################
     #                              END OF YOUR CODE                             #
     #############################################################################
@@ -93,17 +83,7 @@ class TwoLayerNet(object):
     e = torch.exp(scores)
     softmax = e / torch.sum(e, dim=1, keepdim=True)
 
-    # print('hi')
-    # print(y)
-    #print(softmax)
-    # print(softmax[0][y[0]])
-    # print(softmax[1][y[1]])
-    # print(-torch.log(softmax[1][y[1]]))
-    # print(-torch.log(0.))
-    # print('hi')
-
-    ######################
-    # #######################################################
+    #############################################################################
     #       TODO: Output을 이용하여 loss값 계산하고, 'loss'에 저장(scalar)        #
     #                loss function : negative log likelihood                    #
     #              'softmax' 변수에 저장된 softmax값을 이용해서 계산              #
@@ -112,8 +92,6 @@ class TwoLayerNet(object):
     loss = 0
 
     for i in range(len(y)):
-      # print('softmax ' + str(i+1))
-      # print(torch.log(softmax[i][y[i]]))
       loss += -torch.log(softmax[i][y[i]]) / 5
 
     #############################################################################
@@ -147,16 +125,6 @@ class TwoLayerNet(object):
 
     grads['b1'] =torch.sum(dhidden,0)
     grads['W1'] = torch.mm(X.t(), dhidden)
-
-    # print('b1 shape')
-    # print(self.params['b1'].shape)
-    # print('grad b1 shape')
-    # print(grads['b1'].shape)
-    #
-    # print('b2 shape')
-    # print(self.params['b2'].shape)
-    # print('grad b2 shape')
-    # print(grads['b2'].shape)
 
     #############################################################################
     #                              END OF YOUR CODE                             #
