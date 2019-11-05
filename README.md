@@ -1,10 +1,15 @@
 # <strong>Neural Network from scratch </strong>
 
+
 #### Table of contents
+- How to Use
 - Perceptron
 - Multi - layer Perceptron
 - Loss
 - Backpropagation
+
+## <strong> How to use </strong>
+
 
 ## <strong> Perceptron </strong>
 How are we going to draw a line between circle and triangles?
@@ -69,3 +74,4 @@ I have implemented 2-layer perceptron, loss calculation and gradient calculation
 for loss funciton, i have used negative log- likelihood
 
 ![negative](image/negative_log_likelihood.png)
+
