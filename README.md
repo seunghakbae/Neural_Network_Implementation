@@ -44,7 +44,7 @@ It is a stack of perceptron, with hidden layer in between input layer and output
 ## Loss : how to train multi-layer perceptron?
 Loss(=cost) is a real number that represents how much wrong it is. We need to find how different true values are from calculated values. One way is to subtract calculated value from true value.
 
-![loss_function](image/loss_function.PNG)
+![loss_function](image/Loss_function.PNG)
 
 We can also use cross entropy, which is usually used in classification problem. q(x) is the output value and p(x) is true label where expressed in 0 and 1. Thus it adds all the output value of true labels.
 
